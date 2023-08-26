@@ -32,7 +32,7 @@ namespace B.PaymentSumm
                 Console.WriteLine(Program.GetCountResult(_units, prices.Length));
 
 
-                Console.ReadKey();
+                //Console.ReadKey();
                 //Console.WriteLine("Hello World!");
             }
         }
@@ -40,9 +40,36 @@ namespace B.PaymentSumm
         private static string GetCountResult(List<ushort> sortedData, int goodsCount)
         {
             string result = "test";
+            ushort sum = 0;
+            int counter = 0;
+            bool cycleResult = false;
+            int dataCounter = 0;
 
+            while(cycleResult == false)
+            {
+                ushort firstCurrentPriceUnit = sortedData.First();
+                sortedData.RemoveAt(0);
+                sum += firstCurrentPriceUnit;
 
+                counter++;
+                dataCounter++;
+                foreach (ushort data in sortedData.ToList())
+                {
+                    if (data == firstCurrentPriceUnit)
+                    {
+                        sum += data;
+                        sortedData.Remove(data);
+                        counter++;
+                        dataCounter++;
+                    }
+                    else break;
+                }
+                sum -= (ushort)(firstCurrentPriceUnit * (counter / 3));
 
+                counter = 0;
+                if (sortedData.Count < 1) cycleResult = true;
+            }
+            result = $"{sum}";
             return result;
         }
     }
