@@ -30,7 +30,7 @@ namespace B.PaymentSumm
 
         private static string GetCountResult(List<ushort> sortedData, int goodsCount)
         {
-            ushort sum = 0;
+            int sum = 0;
             int counter = 0;
 
             while(sortedData.Count > 0)
@@ -40,6 +40,7 @@ namespace B.PaymentSumm
                 sum += firstCurrentPriceUnit;
 
                 counter++;
+
                 foreach (ushort data in sortedData.ToList())
                 {
                     if (data == firstCurrentPriceUnit)
@@ -50,7 +51,8 @@ namespace B.PaymentSumm
                     }
                     else break;
                 }
-                sum -= (ushort)(firstCurrentPriceUnit * (ushort)(counter / 3));
+                sum -= (int)(firstCurrentPriceUnit * (int)(counter / 3));
+
 
                 counter = 0;
             }
